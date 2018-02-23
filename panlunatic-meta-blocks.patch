@@ -1,0 +1,13 @@
+diff --git a/scholarly-metadata/panlunatic.lua b/scholarly-metadata/panlunatic.lua
+index 44bde65..c82e5bf 100644
+--- a/scholarly-metadata/panlunatic.lua
++++ b/scholarly-metadata/panlunatic.lua
+@@ -114,6 +114,8 @@ function panlunatic.tometa(data)
+     return '{"t":"MetaInlines","c":[' .. data:sub(1, -2) .. ']}'
+   elseif type(data) == "bool" then
+     return '{"t":"MetaBoolean","c":' .. data .. '}'
++  elseif type(data) == "function" then
++    return '{"t":"MetaBlocks","c":[' .. data() .. ']}'
+   elseif is_list(data) then
+     local m = {}
+     for _,v in ipairs(data) do

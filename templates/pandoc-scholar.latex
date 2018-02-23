@@ -256,7 +256,9 @@ $endif$
 
 $if(abstract)$
 \begin{abstract}
+$for(abstract)$
 $abstract$
+$endfor$
 \end{abstract}
 $endif$
 

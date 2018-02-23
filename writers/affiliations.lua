@@ -16,6 +16,7 @@ setmetatable(_G, {__index = panlunatic})
 
 local abstract = {}
 local in_abstract = false
+local abstract_level = nil
 
 function Doc(body, meta, variables)
   meta.author, meta.institute =
@@ -44,16 +45,29 @@ function Cite (c, cs)
 end
 
 function Header(lev, s, attr)
-  in_abstract = (attr.id == "abstract")
-  if in_abstract then
+  local has_abstract = next(abstract) ~= nil
+
+  if not in_abstract and not has_abstract and attr.id == "abstract" then
+    in_abstract = true
+    abstract_level = lev
     return panlunatic.Plain(panlunatic.Str(' '))
+
+  elseif in_abstract then
+    if lev > abstract_level then
+      table.insert(abstract, function() return panlunatic.Header(lev, s, attr) end)
+      return panlunatic.Plain(panlunatic.Str(' '))
+    else
+      -- We've hit the next sibling section of the abstract
+      in_abstract = false
+    end
   end
+
   return panlunatic.Header(lev, s, attr)
 end
 
 function Para(s)
   if in_abstract then
-    table.insert(abstract, s)
+    table.insert(abstract, function() return panlunatic.Para(s) end)
     return panlunatic.Para(panlunatic.Str(' '))
   end
   return panlunatic.Para(s)

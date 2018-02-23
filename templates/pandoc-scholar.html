@@ -92,7 +92,7 @@ $endfor$
     </div>
     $endif$
 </div>
-$if(abstract)$<p class="abstract" property="description">$abstract$</p>$endif$
+$if(abstract)$<div class="abstract" property="description">$for(abstract)$$abstract$$endfor$</div>$endif$
 $if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
 
 $for(include-before)$
