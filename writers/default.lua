@@ -15,9 +15,6 @@ cito = require "cito"
 titleblocks = require "titleblocks"
 setmetatable(_G, {__index = panlunatic})
 
-local abstract = {}
-local in_abstract = false
-
 function Doc(body, meta, variables)
   local authors, affiliations =
     scholarlymeta.canonicalize_authors(meta.author, meta.institute)
